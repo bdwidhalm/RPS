@@ -27,9 +27,13 @@ public class Woody implements Player
   {
     // guess at what opponent will play next
     String guess = "";
+    // get a guess using a Markov-Chain decision
     String markovGuess = markovBased();
+    // get a back-up guess using a novice approach
     String noviceGuess = noviceGuess();
+    // get another back-up guess using a different novice approach
     String novice2Guess = novice2Guess();
+    
     
     if (!novice2Guess.equals(" "))
     {
@@ -121,6 +125,11 @@ public class Woody implements Player
     lastHand = hand;
   }
 
+  /* This method tries to make a guess using a Markov Chain
+   * https://en.wikipedia.org/wiki/Markov_chain
+   * 
+   * Using only what was previously played guess at what will be played next.  
+   */
   private String markovBased()
   {
     // array index to determine rock, paper, or scissors
@@ -182,6 +191,16 @@ public class Woody implements Player
     return markovGuess;
   }
 
+  /* This method is a novice approach
+   * 
+   * The first 6 plays will simply play always as the following:
+   * Rock - Rock - Paper - Rock - Paper - Scissors
+   * 
+   * This is to build up some history on what the opponent is playing.  
+   * 
+   * Then it checks the history of the opponents plays and if one is 
+   * played more than another it guesses at that.  
+   */
   private String noviceGuess()
   {
     String currentPattern = "";
@@ -262,6 +281,16 @@ public class Woody implements Player
     return nextGuess;
   }
 
+  /* This is another novice approach 
+   * The first 6 plays will simply play always as the following:
+   * Rock - Rock - Paper - Rock - Paper - Scissors
+   * It also checks the opponents history of what they are playing.  
+   * 
+   * This instead checks for a pattern and sees if that pattern has been played before
+   * if so it will guess that the next play will be same as the 
+   * time before the pattern was played
+   * 
+   */
   private String novice2Guess()
   {
     String currentPattern = "";
